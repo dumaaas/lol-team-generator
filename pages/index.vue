@@ -52,8 +52,8 @@
                   <p>W: {{ player.rankedWins }} (Ranked)</p>
                 </div>
               </div>
-              <div v-if="!generatedTeam">
-                <div v-for="index in 5" :key="index" class="item">
+              <div>
+                <div v-for="index in teamOneLenght" :key="index" class="item">
                   <p class="empty">Empty</p>
                 </div>
               </div>
@@ -81,8 +81,8 @@
                   <p>W: {{ player.rankedWins }} (Ranked)</p>
                 </div>
               </div>
-              <div v-if="!generatedTeam">
-                <div v-for="index in 5" :key="index" class="item">
+              <div>
+                <div v-for="index in teamTwoLenght" :key="index" class="item">
                   <p class="empty">Empty</p>
                 </div>
               </div>
@@ -95,8 +95,15 @@
               <p v-for="player in players" :key="player.name">
                 {{ player.name }} joined the lobby
               </p>
+              <p v-for="message in messages" :key="message">
+                <span>dumara gadna </span><span> {{ message }} </span>
+              </p>
             </div>
-            <input type="text" />
+            <input
+              type="text"
+              v-on:keyup.enter="addMessage"
+              v-model="messageValue"
+            />
           </div>
           <div class="bottom-invites">
             <div class="bottom-invites__heading">
@@ -128,7 +135,7 @@
     <section class="main-right">
       <div class="team-members">
         <div class="team-members__heading">
-          <h6>Team builder (0/10)</h6>
+          <h6>TEAM BUILDER (0/10)</h6>
         </div>
         <div class="team-members__players">
           <div
@@ -136,7 +143,7 @@
             :key="player.name"
             class="team-members__players-player"
           >
-            <div class="player-left">
+            <div class="player-left" :id="player.name">
               <img
                 :src="require(`@/static/${player.icon}`)"
                 :alt="`${player.name}`"
@@ -146,12 +153,25 @@
                 <p>
                   {{ player.name }}
                 </p>
-                <p>Online</p>
+                <p :id="player.icon">Online</p>
               </div>
             </div>
 
-            <div class="player-right">
-              <button type="submit">Add</button>
+            <div class="player-right" :id="player.rankedWins">
+              <button
+                v-if="isPlayerInTeam(player.id)"
+                type="submit"
+                @click="addPlayerToTeam(player.id)"
+              >
+                Add
+              </button>
+              <button
+                v-else
+                type="submit"
+                @click="removePlayerFromTeam(player.id)"
+              >
+                Remove
+              </button>
             </div>
           </div>
         </div>
@@ -168,8 +188,11 @@ export default {
       teamOne: [],
       teamTwo: [],
       shufflePlayers: [],
+      messages: [],
+      messageValue: "",
       players: [
         {
+          id: 1,
           name: "dumara gadna",
           icon: "iconDuma.png",
           rank: "Silver III",
@@ -177,6 +200,7 @@ export default {
           level: "103",
         },
         {
+          id: 2,
           name: "Hakuna Tomata",
           icon: "iconToma.png",
           rank: "Silver II",
@@ -184,6 +208,7 @@ export default {
           level: "55",
         },
         {
+          id: 3,
           name: "opetLemi",
           icon: "iconLemi.png",
           rank: "Silver III",
@@ -191,6 +216,7 @@ export default {
           level: "116",
         },
         {
+          id: 4,
           name: "Broqlin",
           icon: "iconBogdan.png",
           rank: "Unranked",
@@ -198,6 +224,7 @@ export default {
           level: "257",
         },
         {
+          id: 5,
           name: "Luigi Vampa",
           icon: "iconPaka.png",
           rank: "Platinum IV",
@@ -205,6 +232,7 @@ export default {
           level: "82",
         },
         {
+          id: 6,
           name: "Mr Drohan",
           icon: "iconAndro.png",
           rank: "Silver IV",
@@ -212,6 +240,7 @@ export default {
           level: "48",
         },
         {
+          id: 7,
           name: "Visnja",
           icon: "iconVisnja.png",
           rank: "Gold IV",
@@ -219,6 +248,7 @@ export default {
           level: "243",
         },
         {
+          id: 8,
           name: "Matke",
           icon: "iconMatke.png",
           rank: "Gold III",
@@ -226,6 +256,7 @@ export default {
           level: "121",
         },
         {
+          id: 9,
           name: "Fapke",
           icon: "iconFapke.png",
           rank: "Silver III",
@@ -233,6 +264,7 @@ export default {
           level: "68",
         },
         {
+          id: 10,
           name: "Bacak",
           icon: "iconBacak.png",
           rank: "Silver I",
@@ -240,7 +272,16 @@ export default {
           level: "189",
         },
       ],
+      playersCopy: [],
     };
+  },
+  computed: {
+    teamOneLenght: function () {
+      return 5 - this.teamOne.length;
+    },
+    teamTwoLenght: function () {
+      return 5 - this.teamTwo.length;
+    },
   },
   methods: {
     shuffle(array) {
@@ -260,13 +301,78 @@ export default {
     generateTeam() {
       this.teamOne = [];
       this.teamTwo = [];
-      var playersCopy = this.players;
-      this.shufflePlayers = this.shuffle(playersCopy);
+      this.playersCopy = this.players.map((o) => ({ ...o }));
+      this.shufflePlayers = this.shuffle(this.playersCopy);
       this.teamOne = this.shufflePlayers.slice(0, 5);
       console.log("teamOne", this.teamOne);
       console.log("teamTwo", this.teamTwo);
       this.teamTwo = this.shufflePlayers.slice(5, 10);
       this.generatedTeam = true;
+    },
+    addToArray(array, item) {
+      setTimeout(() => {
+        array.push(item);
+      }, 5000);
+    },
+    addPlayerToTeam(id) {
+      this.playersCopy = this.players.map((o) => ({ ...o }));
+      var player = this.playersCopy.find((user) => user.id === id);
+      var playerDOM = document.getElementById(player.name);
+      var onlineDOM = document.getElementById(player.rankedWins);
+      var randomTeams = ["teamOne", "teamTwo"];
+      var randomTeam =
+        randomTeams[Math.floor(Math.random() * randomTeams.length)];
+
+      if (
+        randomTeam === "teamOne" &&
+        this.teamOne.length < 5 &&
+        !this.teamOne.find((user) => user.id === player.id) &&
+        !this.teamTwo.find((user) => user.id === player.id)
+      ) {
+        this.addToArray(this.teamOne, player);
+      } else if (
+        this.teamTwo.length < 5 &&
+        !this.teamTwo.find((user) => user.id === player.id) &&
+        !this.teamOne.find((user) => user.id === player.id)
+      ) {
+        this.addToArray(this.teamTwo, player);
+      } else {
+        return;
+      }
+      playerDOM.classList.add("centerAnimation");
+      onlineDOM.classList.add("hidden");
+
+      this.generatedTeam = true;
+    },
+    isPlayerInTeam(id) {
+      if (
+        this.teamTwo.find(
+          (user) =>
+            user.id === id || this.teamOne.find((user) => user.id === id)
+        )
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    removePlayerFromTeam(id) {
+      if (this.teamOne.find((user) => user.id === id)) {
+        let removeIndexOne = this.teamOne.findIndex(function (o) {
+          return o.id === id;
+        });
+        if (removeIndexOne !== -1) this.teamOne.splice(removeIndexOne, 1);
+        console.log("index", removeIndexOne);
+      } else {
+        let removeIndexTwo = this.teamTwo.findIndex(function (o) {
+          return o.id === id;
+        });
+        if (removeIndexTwo !== -1) this.teamTwo.splice(removeIndexTwo, 1);
+        console.log("index", removeIndexTwo);
+      }
+    },
+    addMessage() {
+      this.messages.push(this.messageValue);
     },
   },
 };
@@ -276,7 +382,7 @@ export default {
 .main {
   display: flex;
   flex-direction: row;
-
+  position: relative;
   button {
     display: inline-block;
     background-color: #1e2328;
@@ -438,7 +544,9 @@ export default {
 
           &__messages {
             padding-left: 20px;
-
+            span:nth-child(1) {
+              color: #c8a356;
+            }
             p {
               color: #4e4d4a;
               font-size: 14px;
@@ -493,7 +601,7 @@ export default {
     }
   }
   &-right {
-    width: 305px;
+    width: 350px;
     height: 100vh;
     background: linear-gradient(
       0deg,
@@ -519,7 +627,6 @@ export default {
           display: flex;
           justify-content: space-between;
           .player-left {
-            
             display: flex;
             padding-bottom: 15px;
             gap: 10px;
@@ -553,14 +660,68 @@ export default {
             }
           }
           .player-right {
-              button {
-                padding: 8px 15px;
-              }
-                
+            button {
+              padding: 8px 15px;
+            }
           }
         }
       }
     }
   }
+}
+
+animated {
+  background-color: green;
+  background-position: left top;
+  padding-top: 95px;
+  margin-bottom: 60px;
+  -webkit-animation-duration: 10s;
+  animation-duration: 10s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.centerAnimation {
+  position: absolute;
+  top: calc(50% - 80px);
+  left: calc(50% - 200px);
+  animation: centerAnimation 6s forwards;
+  background-color: black;
+  padding: 20px 40px;
+  background: linear-gradient(
+    0deg,
+    rgba(2, 12, 21, 1) 0%,
+    rgba(13, 30, 41, 1) 100%
+  );
+  border: 2px solid #c88e22;
+} 
+
+@-webkit-keyframes centerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale3d(2.5, 1.2, 0.3);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes centerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale3d(2.5, 2.5, 0.3);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.hidden {
+  display: none;
 }
 </style>
