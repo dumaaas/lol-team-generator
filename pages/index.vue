@@ -346,6 +346,7 @@ main {
           border-radius: 0;
           border: 2px solid #775928;
           background-color: #010a13;
+          margin-top: 15px;
         }
 
         &__messages {
