@@ -1,128 +1,162 @@
 <template>
   <main class="main">
-    <div class="overlay">
-      <div class="top">
-        <div class="heading">
-          <div class="heading-left">
-            <img src="@/static/logo.png" alt="logo" width="40px" />
+    <section class="main-left">
+      <div class="overlay">
+        <div class="top">
+          <div class="heading">
+            <div class="heading-left">
+              <img src="@/static/logo.png" alt="logo" width="40px" />
+            </div>
+            <div class="heading-right">
+              <div>
+                <h1>LEAUGE OF LEGENDS TEAM GENERATOR</h1>
+              </div>
+              <div>
+                <p>Summoner's Rift</p>
+                <p class="square"></p>
+                <p>5v5</p>
+                <p class="square"></p>
+                <p>Blind Pick</p>
+              </div>
+              <div>
+                <span> Few icons </span>
+                <span> Few icons </span>
+                <span> Few icons </span>
+              </div>
+            </div>
           </div>
-          <div class="heading-right">
-            <div>
-              <h1>LEAUGE OF LEGENDS TEAM GENERATOR</h1>
-            </div>
-            <div>
-              <p>Summoner's Rift</p>
-              <p class="square"></p>
-              <p>5v5</p>
-              <p class="square"></p>
-              <p>Blind Pick</p>
-            </div>
-            <div>
-              <span> Few icons </span>
-              <span> Few icons </span>
-              <span> Few icons </span>
-            </div>
+          <div class="generate">
+            <button type="submit" @click="generateTeam">GENERATE</button>
           </div>
         </div>
-        <div class="generate">
-          <button type="submit" @click="generateTeam">GENERATE</button>
-        </div>
-      </div>
-      <div class="middle">
-        <div class="middle-left">
-          <div class="middle-left__heading">
-            <h6>TEAM 1</h6>
-          </div>
-          <div class="middle-left__team">
-            <div v-for="player in teamOne" :key="player.name" class="item">
-              <div v-if="generatedTeam" class="item-name">
-                <span> {{ player.level }} </span>
-                <div class="item-name__icon">
-                  <img
-                    :src="require(`@/static/${player.icon}`)"
-                    :alt="`${player.name}`"
-                  />
-                  <div class="online"></div>
+        <div class="middle">
+          <div class="middle-left">
+            <div class="middle-left__heading">
+              <h6>TEAM 1</h6>
+            </div>
+            <div class="middle-left__team">
+              <div v-for="player in teamOne" :key="player.name" class="item">
+                <div v-if="generatedTeam" class="item-name">
+                  <span> {{ player.level }} </span>
+                  <div class="item-name__icon">
+                    <img
+                      :src="require(`@/static/${player.icon}`)"
+                      :alt="`${player.name}`"
+                    />
+                    <div class="online"></div>
+                  </div>
+                  <span>{{ player.name }}</span>
                 </div>
-                <span>{{ player.name }}</span>
-              </div>
-              <div class="item-rank">
-                <p>{{ player.rank }}</p>
-                <p>W: {{ player.rankedWins }} (Ranked)</p>
-              </div>
-            </div>
-            <div v-if="!generatedTeam">
-              <div v-for="index in 5" :key="index" class="item">
-                <p class="empty">Empty</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="middle-right">
-          <div class="middle-right__heading">
-            <h6>TEAM 2</h6>
-          </div>
-          <div class="middle-right__team">
-            <div v-for="player in teamTwo" :key="player.name" class="item">
-              <div v-if="generatedTeam" class="item-name">
-                <span> {{ player.level }} </span>
-                <div class="item-name__icon">
-                  <img
-                    :src="require(`@/static/${player.icon}`)"
-                    :alt="`${player.name}`"
-                  />
-                  <div class="online"></div>
+                <div class="item-rank">
+                  <p>{{ player.rank }}</p>
+                  <p>W: {{ player.rankedWins }} (Ranked)</p>
                 </div>
-                <span>{{ player.name }}</span>
               </div>
-              <div class="item-rank">
-                <p>{{ player.rank }}</p>
-                <p>W: {{ player.rankedWins }} (Ranked)</p>
+              <div v-if="!generatedTeam">
+                <div v-for="index in 5" :key="index" class="item">
+                  <p class="empty">Empty</p>
+                </div>
               </div>
             </div>
-            <div v-if="!generatedTeam">
-              <div v-for="index in 5" :key="index" class="item">
-                <p class="empty">Empty</p>
+          </div>
+          <div class="middle-right">
+            <div class="middle-right__heading">
+              <h6>TEAM 2</h6>
+            </div>
+            <div class="middle-right__team">
+              <div v-for="player in teamTwo" :key="player.name" class="item">
+                <div v-if="generatedTeam" class="item-name">
+                  <span> {{ player.level }} </span>
+                  <div class="item-name__icon">
+                    <img
+                      :src="require(`@/static/${player.icon}`)"
+                      :alt="`${player.name}`"
+                    />
+                    <div class="online"></div>
+                  </div>
+                  <span>{{ player.name }}</span>
+                </div>
+                <div class="item-rank">
+                  <p>{{ player.rank }}</p>
+                  <p>W: {{ player.rankedWins }} (Ranked)</p>
+                </div>
+              </div>
+              <div v-if="!generatedTeam">
+                <div v-for="index in 5" :key="index" class="item">
+                  <p class="empty">Empty</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="bottom">
-        <div class="bottom-chat">
-          <div class="bottom-chat__messages">
-            <p v-for="player in players" :key="player.name">
-              {{ player.name }} joined the lobby
-            </p>
-          </div>
-          <input type="text" />
-        </div>
-        <div class="bottom-invites">
-          <div class="bottom-invites__heading">
-            <h6>INVITES (10)</h6>
-          </div>
-          <div class="bottom-invites__players">
-            <div v-for="player in players" :key="player.name" class="player">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <p>
-                {{ player.name }}
+        <div class="bottom">
+          <div class="bottom-chat">
+            <div class="bottom-chat__messages">
+              <p v-for="player in players" :key="player.name">
+                {{ player.name }} joined the lobby
               </p>
             </div>
+            <input type="text" />
           </div>
-        </div>
-        <div class="bottom-spec">
-          <div class="bottom-spec__heading">
-            <h6>SPECTATORS (0/4)</h6>
-            <button type="submit">Spectate</button>
+          <div class="bottom-invites">
+            <div class="bottom-invites__heading">
+              <h6>INVITES (10)</h6>
+            </div>
+            <div class="bottom-invites__players">
+              <div v-for="player in players" :key="player.name" class="player">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <p>
+                  {{ player.name }}
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="bottom-spec__players">
-            <p>No spectators</p>
+          <div class="bottom-spec">
+            <div class="bottom-spec__heading">
+              <h6>SPECTATORS (0/4)</h6>
+              <button type="submit">Spectate</button>
+            </div>
+            <div class="bottom-spec__players">
+              <p>No spectators</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+    <section class="main-right">
+      <div class="team-members">
+        <div class="team-members__heading">
+          <h6>Team builder (0/10)</h6>
+        </div>
+        <div class="team-members__players">
+          <div
+            v-for="player in players"
+            :key="player.name"
+            class="team-members__players-player"
+          >
+            <div class="player-left">
+              <img
+                :src="require(`@/static/${player.icon}`)"
+                :alt="`${player.name}`"
+              />
+              <div class="online"></div>
+              <div class="name">
+                <p>
+                  {{ player.name }}
+                </p>
+                <p>Online</p>
+              </div>
+            </div>
+
+            <div class="player-right">
+              <button type="submit">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -239,10 +273,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-main {
-  background: url("~@/static/cover3.jpeg") no-repeat center center scroll;
-  height: 100vh;
-  width: 100%;
+.main {
+  display: flex;
+  flex-direction: row;
+
   button {
     display: inline-block;
     background-color: #1e2328;
@@ -258,7 +292,6 @@ main {
       box-shadow: 0 5px 15px rgba(205, 190, 145, 0.4);
     }
   }
-
   h6 {
     font-size: 16px;
     font-weight: 700;
@@ -267,186 +300,263 @@ main {
     padding-left: 20px;
     padding-bottom: 5px;
   }
-  .overlay {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
-    padding: 50px;
 
-    .top {
+  &-left {
+    background: url("~@/static/cover3.jpeg") no-repeat center center scroll;
+    height: 100vh;
+    width: 85%;
+
+    .overlay {
+      position: relative;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .heading {
-        display: flex;
-        gap: 20px;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+      padding: 50px;
 
-        &-left {
-          padding-top: 5px;
-        }
-        &-right {
-          div:nth-child(2) {
-            display: flex;
-            gap: 15px;
-            p {
-              color: #919b8c !important;
-            }
-
-            .square {
-              margin-top: 6px;
-              width: 5px;
-              height: 5px;
-              background: #919b8c;
-              transform: rotate(45deg);
-            }
-          }
-          h1 {
-            color: #e1e3d2;
-          }
-          span {
-            color: #464a43;
-          }
-        }
-      }
-    }
-
-    .middle {
-      padding-left: 20px;
-      padding-top: 50px;
-      display: flex;
-      gap: 15px;
-
-      .item {
-        border-bottom: 1px solid #514f4d;
-        padding: 0 20px;
-        height: 60px;
+      .top {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        &-name {
+        .heading {
           display: flex;
-          gap: 15px;
+          gap: 20px;
+
+          &-left {
+            padding-top: 5px;
+          }
+          &-right {
+            div:nth-child(2) {
+              display: flex;
+              gap: 15px;
+              p {
+                color: #919b8c !important;
+              }
+
+              .square {
+                margin-top: 6px;
+                width: 5px;
+                height: 5px;
+                background: #919b8c;
+                transform: rotate(45deg);
+              }
+            }
+            h1 {
+              color: #e1e3d2;
+            }
+            span {
+              color: #464a43;
+            }
+          }
+        }
+      }
+
+      .middle {
+        padding-left: 20px;
+        padding-top: 50px;
+        display: flex;
+        gap: 15px;
+
+        .item {
+          border-bottom: 1px solid #514f4d;
+          padding: 0 20px;
+          height: 60px;
+          display: flex;
+          justify-content: space-between;
           align-items: center;
 
-          span:nth-child(1) {
-            width: 28px;
-          }
+          &-name {
+            display: flex;
+            gap: 15px;
+            align-items: center;
 
-          &__icon {
-            position: relative;
+            span:nth-child(1) {
+              width: 28px;
+            }
 
-            .online {
-              position: absolute;
-              right: 0;
-              bottom: 3px;
-              width: 11px;
-              height: 11px;
-              border: 1px solid black;
-              border-radius: 50%;
-              background-color: #4fe489;
+            &__icon {
+              position: relative;
+
+              .online {
+                position: absolute;
+                right: 0;
+                bottom: 3px;
+                width: 11px;
+                height: 11px;
+                border: 1px solid black;
+                border-radius: 50%;
+                background-color: #4fe489;
+              }
             }
           }
-        }
 
-        img {
-          width: 33px;
-          border-radius: 50%;
-          border: 2px solid #c88e22;
-        }
-        span {
-          color: #c88e22;
-        }
-        p {
-          text-align: right;
-          color: #c88e22;
-        }
-        .empty {
-          color: #514f4d;
-        }
-      }
-
-      &-left {
-        width: 50%;
-      }
-
-      &-right {
-        width: 50%;
-      }
-    }
-
-    .bottom {
-      padding-top: 30px;
-      padding-left: 20px;
-      display: flex;
-      margin-top: auto;
-      gap: 30px;
-      &-chat {
-        width: 33.33%;
-
-        input {
-          width: 100%;
-          height: 38px;
-          border-radius: 0;
-          border: 2px solid #775928;
-          background-color: #010a13;
-          margin-top: 15px;
-        }
-
-        &__messages {
-          padding-left: 20px;
-
+          img {
+            width: 33px;
+            border-radius: 50%;
+            border: 2px solid #c88e22;
+          }
+          span {
+            color: #c88e22;
+          }
           p {
-            color: #4e4d4a;
-            font-size: 14px;
-            padding-top: 2px;
+            text-align: right;
+            color: #c88e22;
           }
+          .empty {
+            color: #514f4d;
+          }
+        }
+
+        &-left {
+          width: 50%;
+        }
+
+        &-right {
+          width: 50%;
         }
       }
 
-      &-invites {
-        width: 33.33%;
-        &__players {
-          padding-left: 27px;
-          .player {
-            padding-top: 2px;
-            .dot {
-              display: inline-block;
-              border-radius: 50%;
-              width: 4px;
-              height: 4px;
-              background-color: #f0e6d2;
-            }
+      .bottom {
+        padding-top: 30px;
+        padding-left: 20px;
+        display: flex;
+        margin-top: auto;
+        gap: 30px;
+        &-chat {
+          width: 33.33%;
+
+          input {
+            width: 100%;
+            height: 38px;
+            border-radius: 0;
+            border: 2px solid #775928;
+            background-color: #010a13;
+            margin-top: 15px;
+          }
+
+          &__messages {
+            padding-left: 20px;
+
             p {
-              display: inline-block;
-              padding-left: 10px;
-              color: #a09b8c;
+              color: #4e4d4a;
               font-size: 14px;
               padding-top: 2px;
             }
           }
         }
-      }
 
-      &-spec {
-        width: 33.33%;
-
-        p {
-          padding-left: 20px;
-          color: #a09b8c;
-          font-size: 16px;
-          padding-top: 10px;
+        &-invites {
+          width: 33.33%;
+          &__players {
+            padding-left: 27px;
+            .player {
+              padding-top: 2px;
+              .dot {
+                display: inline-block;
+                border-radius: 50%;
+                width: 4px;
+                height: 4px;
+                background-color: #f0e6d2;
+              }
+              p {
+                display: inline-block;
+                padding-left: 10px;
+                color: #a09b8c;
+                font-size: 14px;
+                padding-top: 2px;
+              }
+            }
+          }
         }
 
-        &__heading {
+        &-spec {
+          width: 33.33%;
+
+          p {
+            padding-left: 20px;
+            color: #a09b8c;
+            font-size: 16px;
+            padding-top: 10px;
+          }
+
+          &__heading {
+            display: flex;
+            justify-content: space-between;
+            h6 {
+              display: inline-block;
+            }
+          }
+        }
+      }
+    }
+  }
+  &-right {
+    width: 305px;
+    height: 100vh;
+    background: linear-gradient(
+      0deg,
+      rgba(2, 12, 21, 1) 0%,
+      rgba(13, 30, 41, 1) 100%
+    );
+
+    .team-members {
+      padding: 20px 0;
+      &__heading {
+        background-color: rgba(2, 12, 21, 1);
+        padding: 5px 20px;
+
+        h6 {
+          padding-left: 0;
+          padding-bottom: 0;
+        }
+      }
+
+      &__players {
+        padding: 20px;
+        &-player {
           display: flex;
           justify-content: space-between;
-          h6 {
-            display: inline-block;
+          .player-left {
+            
+            display: flex;
+            padding-bottom: 15px;
+            gap: 10px;
+            img {
+              width: 33px;
+              border-radius: 50%;
+              border: 2px solid #c88e22;
+            }
+
+            p {
+              color: #928f82;
+
+              &:nth-child(2) {
+                color: #4fe489;
+              }
+            }
+
+            .player-icon {
+              position: relative;
+
+              .online {
+                position: absolute;
+                right: 0;
+                bottom: 3px;
+                width: 11px;
+                height: 11px;
+                border: 1px solid black;
+                border-radius: 50%;
+                background-color: #4fe489;
+              }
+            }
+          }
+          .player-right {
+              button {
+                padding: 8px 15px;
+              }
+                
           }
         }
       }
