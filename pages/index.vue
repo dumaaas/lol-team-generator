@@ -165,12 +165,14 @@
                 v-if="isPlayerInTeam(player.id)"
                 type="submit"
                 @click="addPlayerToTeam(player.id)"
+                :disabled="!isButtonActive"
               >
                 Add
               </button>
               <button
                 v-else
                 type="submit"
+                :disabled="!isButtonActive"
                 @click="removePlayerFromTeam(player.id)"
               >
                 Remove
@@ -197,6 +199,7 @@
 export default {
   data() {
     return {
+      isButtonActive: true,
       newName: "",
       newIcon: "iconDuma.png",
       generatedTeam: false,
@@ -272,7 +275,7 @@ export default {
         },
         {
           id: 9,
-          name: "Fapke",
+          name: "Kakarot",
           icon: "iconFapke.png",
           rank: "Silver III",
           rankedWins: "12",
@@ -280,7 +283,7 @@ export default {
         },
         {
           id: 10,
-          name: "Bacak",
+          name: "Donsi1995",
           icon: "iconBacak.png",
           rank: "Silver I",
           rankedWins: "78",
@@ -330,12 +333,13 @@ export default {
       setTimeout(() => {
         array.push(item);
         var centerAnimation = document.getElementById("animationPlayer");
-
         centerAnimation.classList.remove("centerAnimation");
         centerAnimation.classList.add("hidden");
+        this.isButtonActive = true;
       }, 2500);
     },
     addPlayerToTeam(id) {
+      this.isButtonActive = false;
       this.playersCopy = this.players.map((o) => ({ ...o }));
       var player = this.playersCopy.find((user) => user.id === id);
       var randomTeams = ["teamOne", "teamTwo"];
