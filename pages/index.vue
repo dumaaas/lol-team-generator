@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="generate">
-          <button type="submit">GENERATE</button>
+          <button type="submit" @click="generateTeam">GENERATE</button>
         </div>
       </div>
       <div class="middle">
@@ -34,31 +34,27 @@
             <h6>TEAM 1</h6>
           </div>
           <div class="middle-left__team">
-            <div class="item">
-              <div class="item-name">
-                <span> 103 </span>
+            <div v-for="player in teamOne" :key="player.name" class="item">
+              <div v-if="generatedTeam" class="item-name">
+                <span> {{ player.level }} </span>
                 <div class="item-name__icon">
-                  <img src="@/static/iconDuma.png" alt="icon" />
+                  <img
+                    :src="require(`@/static/${player.icon}`)"
+                    :alt="`${player.name}`"
+                  />
                   <div class="online"></div>
                 </div>
-                <span>dumara gadna</span>
+                <span>{{ player.name }}</span>
               </div>
               <div class="item-rank">
-                <p>Silver III</p>
-                <p>W: 50 (Ranked)</p>
+                <p>{{ player.rank }}</p>
+                <p>W: {{ player.rankedWins }} (Ranked)</p>
               </div>
             </div>
-            <div class="item">
-              <p class="empty">Empty</p>
-            </div>
-            <div class="item">
-              <p class="empty">Empty</p>
-            </div>
-            <div class="item">
-              <p class="empty">Empty</p>
-            </div>
-            <div class="item">
-              <p class="empty">Empty</p>
+            <div v-if="!generatedTeam">
+              <div v-for="index in 5" :key="index" class="item">
+                <p class="empty">Empty</p>
+              </div>
             </div>
           </div>
         </div>
@@ -67,20 +63,27 @@
             <h6>TEAM 2</h6>
           </div>
           <div class="middle-right__team">
-            <div class="item">
-              <p class="empty">Empty</p>
+            <div v-for="player in teamTwo" :key="player.name" class="item">
+              <div v-if="generatedTeam" class="item-name">
+                <span> {{ player.level }} </span>
+                <div class="item-name__icon">
+                  <img
+                    :src="require(`@/static/${player.icon}`)"
+                    :alt="`${player.name}`"
+                  />
+                  <div class="online"></div>
+                </div>
+                <span>{{ player.name }}</span>
+              </div>
+              <div class="item-rank">
+                <p>{{ player.rank }}</p>
+                <p>W: {{ player.rankedWins }} (Ranked)</p>
+              </div>
             </div>
-            <div class="item">
-              <p class="empty">Empty</p>
-            </div>
-            <div class="item">
-              <p class="empty">Empty</p>
-            </div>
-            <div class="item">
-              <p class="empty">Empty</p>
-            </div>
-            <div class="item">
-              <p class="empty">Empty</p>
+            <div v-if="!generatedTeam">
+              <div v-for="index in 5" :key="index" class="item">
+                <p class="empty">Empty</p>
+              </div>
             </div>
           </div>
         </div>
@@ -127,69 +130,110 @@
 export default {
   data() {
     return {
+      generatedTeam: false,
+      teamOne: [],
+      teamTwo: [],
+      shufflePlayers: [],
       players: [
         {
           name: "dumara gadna",
           icon: "iconDuma.png",
           rank: "Silver III",
           rankedWins: "50",
+          level: "103",
         },
         {
           name: "Hakuna Tomata",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Silver II",
+          rankedWins: "41",
+          level: "55",
         },
         {
           name: "opetLemi",
           icon: "iconDuma.png",
           rank: "Silver III",
-          rankedWins: "50",
+          rankedWins: "32",
+          level: "116",
         },
         {
           name: "Broqlin",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Unranked",
+          rankedWins: "0",
+          level: "257",
         },
         {
           name: "Luigi Vampa",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Platinum IV",
+          rankedWins: "52",
+          level: "82",
         },
         {
           name: "Mr Drohan",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Silver IV",
+          rankedWins: "8",
+          level: "48",
         },
         {
           name: "Visnja",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Gold IV",
+          rankedWins: "21",
+          level: "243",
         },
         {
           name: "Matke",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Gold III",
+          rankedWins: "89",
+          level: "121",
         },
         {
           name: "Fapke",
           icon: "iconDuma.png",
           rank: "Silver III",
-          rankedWins: "50",
+          rankedWins: "12",
+          level: "68",
         },
         {
           name: "Bacak",
           icon: "iconDuma.png",
-          rank: "Silver III",
-          rankedWins: "50",
+          rank: "Silver I",
+          rankedWins: "78",
+          level: "189",
         },
       ],
     };
+  },
+  methods: {
+    shuffle(array) {
+      var tmp,
+        current,
+        top = array.length;
+      if (top)
+        while (--top) {
+          current = Math.floor(Math.random() * (top + 1));
+          tmp = array[current];
+          array[current] = array[top];
+          array[top] = tmp;
+        }
+      return array;
+    },
+
+    generateTeam() {
+      this.teamOne = [];
+      this.teamTwo = [];
+      var playersCopy = this.players;
+      this.shufflePlayers = this.shuffle(playersCopy);
+      this.teamOne = this.shufflePlayers.slice(0, 5);
+      console.log("teamOne", this.teamOne);
+      console.log("teamTwo", this.teamTwo);
+      this.teamTwo = this.shufflePlayers.slice(5, 10);
+      this.generatedTeam = true;
+    },
   },
 };
 </script>
@@ -288,6 +332,10 @@ main {
           display: flex;
           gap: 15px;
           align-items: center;
+
+          span:nth-child(1) {
+            width: 28px;
+          }
 
           &__icon {
             position: relative;
