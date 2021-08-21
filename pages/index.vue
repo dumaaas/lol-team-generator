@@ -177,6 +177,15 @@
         </div>
       </div>
     </section>
+    <div>
+      <audio
+        ref="audio"
+        :src="`require(@/static/drum.mp3)`"
+        preload
+        id="audio"
+        muted
+      ></audio>
+    </div>
   </main>
 </template>
 
@@ -322,7 +331,9 @@ export default {
       var randomTeams = ["teamOne", "teamTwo"];
       var randomTeam =
         randomTeams[Math.floor(Math.random() * randomTeams.length)];
-
+      let audio = this.$refs.audio;
+      console.log(audio);
+      audio.play();
       if (
         randomTeam === "teamOne" &&
         this.teamOne.length < 5 &&
@@ -694,7 +705,7 @@ animated {
     rgba(13, 30, 41, 1) 100%
   );
   border: 2px solid #c88e22;
-} 
+}
 
 @-webkit-keyframes centerAnimation {
   0% {
