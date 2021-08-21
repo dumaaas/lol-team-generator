@@ -1,0 +1,42 @@
+.btn {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  background-color: white;
+  padding: 12px 50px;
+  font-size: 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  border: 0px;
+  color: $primary;
+  cursor: pointer;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: darken($primary, 5%);
+    color: $secondary;
+  }
+
+  &.btn-light {
+    color: $tertiary;
+    background-color: #fff;
+    border: 0.0625rem solid darken(#fff, 20%);
+
+    &:hover {
+      background-color: darken(#fff, 5%);
+      color: $tertiary;
+    }
+  }
+
+  &.btn-invert {
+    color: $secondary;
+    background-color: $primary;
+    border: 0.0625rem solid $primary;
+
+    &:hover {
+      color: $primary;
+      background-color: $secondary;
+    }
+  }
+
+}

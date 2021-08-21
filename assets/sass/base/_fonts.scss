@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Friz';
+    src: url('~assets/fonts/FrizQuadrataBold.woff2') format('woff2'),
+        url('~assets/fonts/FrizQuadrataBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Friz Quadrata Std';
+    src: url('~assets/fonts/FrizQuadrataStd.woff2') format('woff2'),
+        url('~assets/fonts/FrizQuadrataStd.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Friz Quadrata';
+    src: url('~assets/fonts/FrizQua-ReguOS.woff2') format('woff2'),
+        url('~assets/fonts/FrizQua-ReguOS.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Friz Quadrata';
+    src: url('~assets/fonts/FrizQua-ReguItalOS.woff2') format('woff2'),
+        url('~assets/fonts/FrizQua-ReguItalOS.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+

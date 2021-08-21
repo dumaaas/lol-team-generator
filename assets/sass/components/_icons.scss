@@ -1,0 +1,38 @@
+.icon {
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid $secondary;
+  padding: 0px 4px;
+  margin-right: 10px;
+
+  &:hover {
+    color: $primary-darker;
+    border: 2px solid $primary-darker;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  &.instagram,&.youtube {
+    svg {
+      width: 12px;
+      margin-top: 1px;
+    }
+  }
+
+  &.facebook {
+    padding: 0px 6px;
+
+    svg {
+      width: 8px;
+      margin-top: 1px;
+    }
+  }
+
+  &.icon-darker {
+    border-color: $tertiary;
+
+    &:hover {
+        color: $primary-darker;
+        border: 2px solid $primary-darker;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+#input-decortaion {
+  background-color: transparent;
+  border: 1px solid $tertiary;
+  border-radius: 20px;
+  height: 38px;
+  width: 220px;
+  margin: 20px 20px 20px 0;
+  color: $tertiary;
+  padding-left: 10px;
+  font-size: 0.9rem;
+}
+
+input[type='email'],
+input[type='number'],
+input[type='text'],
+textarea {
+  @extend #input-decortaion;
+}

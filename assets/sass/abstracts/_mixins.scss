@@ -1,0 +1,59 @@
+/*
+    Diference between template breakpoints value and SCSS(this) breakpoints value:
+    * Template breakpoints:
+    ? xs: max: 575px;
+    ? sm: min: 576px;
+    ? md: min: 768px;
+    ? lg: min: 992px;
+    ? xl: min: 1450px;
+
+    * SCSS(this) breakpoints:
+    ? Defined below the comments..
+*/
+
+$xs: (
+    max: 767px
+);
+$sm: (
+    min: 768px
+);
+$md: (
+    min: 992px
+);
+$lg: (
+    min: 1450px
+);
+$xl: (
+    min: 1650px
+);
+$sm-only: (
+    min: map-get($sm, min),
+    max: map-get($md, min) - 1
+);
+$md-only: (
+    min: map-get($md, min),
+    max: map-get($lg, min) - 1
+);
+
+@mixin breakpoint($map) {
+    $query: '';
+
+    @if type-of($map) ==map {
+        @if map-has-key($map, min) {
+            $query: append($query, '(min-width: #{map-get($map, min)})');
+        }
+
+        @if map-has-key($map, min) and map-has-key($map, max) {
+            $query: append($query, 'and');
+        }
+
+        @if map-has-key($map, max) {
+            $query: append($query, '(max-width: #{map-get($map, max)})');
+        }
+    }
+
+    @media #{$query} {
+        @content;
+    }
+}
+
