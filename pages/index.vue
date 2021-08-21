@@ -135,7 +135,7 @@
     <section class="main-right">
       <div class="team-members">
         <div class="team-members__heading">
-          <h6>TEAM BUILDER (0/10)</h6>
+          <h6>TEAM BUILDER ({{ teamBuildLength }}/10)</h6>
         </div>
         <div class="team-members__players">
           <div
@@ -144,11 +144,14 @@
             class="team-members__players-player"
           >
             <div class="player-left" :id="player.name">
-              <img
-                :src="require(`@/static/${player.icon}`)"
-                :alt="`${player.name}`"
-              />
-              <div class="online"></div>
+              <div class="player-icon">
+                <img
+                  :src="require(`@/static/${player.icon}`)"
+                  :alt="`${player.name}`"
+                />
+                <div class="online"></div>
+              </div>
+
               <div class="name">
                 <p>
                   {{ player.name }}
@@ -177,6 +180,16 @@
         </div>
       </div>
     </section>
+    <div class="hidden" id="animationPlayer">
+      <div class="animation-player">
+        <img :src="require(`@/static/${newIcon}`)" />
+        <div class="name">
+          <p>
+            {{ newName }}
+          </p>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -184,6 +197,8 @@
 export default {
   data() {
     return {
+      newName: "",
+      newIcon: "iconDuma.png",
       generatedTeam: false,
       teamOne: [],
       teamTwo: [],
@@ -282,6 +297,9 @@ export default {
     teamTwoLenght: function () {
       return 5 - this.teamTwo.length;
     },
+    teamBuildLength: function () {
+      return this.teamOne.length + this.teamTwo.length;
+    },
   },
   methods: {
     shuffle(array) {
@@ -297,7 +315,6 @@ export default {
         }
       return array;
     },
-
     generateTeam() {
       this.teamOne = [];
       this.teamTwo = [];
@@ -312,14 +329,20 @@ export default {
     addToArray(array, item) {
       setTimeout(() => {
         array.push(item);
-      }, 5000);
+        var centerAnimation = document.getElementById("animationPlayer");
+
+        centerAnimation.classList.remove("centerAnimation");
+        centerAnimation.classList.add("hidden");
+      }, 2500);
     },
     addPlayerToTeam(id) {
       this.playersCopy = this.players.map((o) => ({ ...o }));
       var player = this.playersCopy.find((user) => user.id === id);
-      var playerDOM = document.getElementById(player.name);
-      var onlineDOM = document.getElementById(player.rankedWins);
       var randomTeams = ["teamOne", "teamTwo"];
+      var centerAnimation = document.getElementById("animationPlayer");
+      this.newIcon = player.icon;
+      this.newName = player.name;
+
       var randomTeam =
         randomTeams[Math.floor(Math.random() * randomTeams.length)];
 
@@ -339,9 +362,8 @@ export default {
       } else {
         return;
       }
-      playerDOM.classList.add("centerAnimation");
-      onlineDOM.classList.add("hidden");
-
+      centerAnimation.classList.add("centerAnimation");
+      centerAnimation.classList.remove("hidden");
       this.generatedTeam = true;
     },
     isPlayerInTeam(id) {
@@ -513,6 +535,13 @@ export default {
           .empty {
             color: #514f4d;
           }
+
+          &:hover {
+            transition: all 0.4s ease-in;
+            box-shadow: 0 0 15px rgba(205, 190, 145, 0.9);
+            cursor: pointer;
+            transition: all 0.5s ease;
+          }
         }
 
         &-left {
@@ -640,7 +669,8 @@ export default {
               color: #928f82;
 
               &:nth-child(2) {
-                color: #4fe489;
+                color: #0a863f;
+                font-size: 14px;
               }
             }
 
@@ -670,22 +700,12 @@ export default {
   }
 }
 
-animated {
-  background-color: green;
-  background-position: left top;
-  padding-top: 95px;
-  margin-bottom: 60px;
-  -webkit-animation-duration: 10s;
-  animation-duration: 10s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
 .centerAnimation {
   position: absolute;
+  display: block;
   top: calc(50% - 80px);
   left: calc(50% - 200px);
-  animation: centerAnimation 6s forwards;
+  animation: centerAnimation 3s forwards;
   background-color: black;
   padding: 20px 40px;
   background: linear-gradient(
@@ -701,7 +721,7 @@ animated {
     opacity: 1;
   }
   50% {
-    transform: scale3d(2.5, 1.2, 0.3);
+    transform: scale3d(2, 1, 0.3);
   }
   100% {
     opacity: 0;
@@ -723,5 +743,22 @@ animated {
 
 .hidden {
   display: none;
+}
+
+.animation-player {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+  img {
+    width: 33px;
+    border-radius: 50%;
+    border: 2px solid #c88e22;
+  }
+
+  p {
+    color: #928f82;
+  }
 }
 </style>
