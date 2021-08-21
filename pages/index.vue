@@ -300,7 +300,7 @@ main {
               height: 11px;
               border: 1px solid black;
               border-radius: 50%;
-              background-color: #4FE489;
+              background-color: #4fe489;
             }
           }
         }
@@ -342,6 +342,7 @@ main {
 
         input {
           width: 100%;
+          height: 38px;
           border-radius: 0;
           border: 2px solid #775928;
           background-color: #010a13;
