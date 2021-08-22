@@ -30,64 +30,8 @@
           </div>
         </div>
         <div class="middle">
-          <div class="middle-left">
-            <div class="middle-left__heading">
-              <h6>TEAM 1</h6>
-            </div>
-            <div class="middle-left__team">
-              <div v-for="player in teamOne" :key="player.name" class="item">
-                <div class="item-name">
-                  <span> {{ player.level }} </span>
-                  <div class="item-name__icon">
-                    <img
-                      :src="require(`@/static/${player.icon}`)"
-                      :alt="`${player.name}`"
-                    />
-                    <div class="online"></div>
-                  </div>
-                  <span>{{ player.name }}</span>
-                </div>
-                <div class="item-rank">
-                  <p>{{ player.rank }}</p>
-                  <p>W: {{ player.rankedWins }} (Ranked)</p>
-                </div>
-              </div>
-              <div>
-                <div v-for="index in teamOneLenght" :key="index" class="item">
-                  <p class="empty">Empty</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="middle-right">
-            <div class="middle-right__heading">
-              <h6>TEAM 2</h6>
-            </div>
-            <div class="middle-right__team">
-              <div v-for="player in teamTwo" :key="player.name" class="item">
-                <div class="item-name">
-                  <span> {{ player.level }} </span>
-                  <div class="item-name__icon">
-                    <img
-                      :src="require(`@/static/${player.icon}`)"
-                      :alt="`${player.name}`"
-                    />
-                    <div class="online"></div>
-                  </div>
-                  <span>{{ player.name }}</span>
-                </div>
-                <div class="item-rank">
-                  <p>{{ player.rank }}</p>
-                  <p>W: {{ player.rankedWins }} (Ranked)</p>
-                </div>
-              </div>
-              <div>
-                <div v-for="index in teamTwoLenght" :key="index" class="item">
-                  <p class="empty">Empty</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Team :team="teamOne" > TEAM 1 </Team>
+          <Team :team="teamTwo" > TEAM 2 </Team>
         </div>
         <div class="bottom">
           <div class="bottom-chat">
@@ -192,16 +136,23 @@
         </div>
       </div>
     </div>
-    <Modal v-if="showModal" @close-modal="closeModal" @new-player="addNewPlayer" :icons="icons"/>
+    <Modal
+      v-if="showModal"
+      @close-modal="closeModal"
+      @new-player="addNewPlayer"
+      :icons="icons"
+    />
   </main>
 </template>
 
 <script>
 import Modal from "@/components/Modal.vue";
+import Team from "@/components/Team.vue";
 
 export default {
   components: {
     Modal,
+    Team,
   },
   data() {
     return {
@@ -313,12 +264,6 @@ export default {
     };
   },
   computed: {
-    teamOneLenght: function () {
-      return 5 - this.teamOne.length;
-    },
-    teamTwoLenght: function () {
-      return 5 - this.teamTwo.length;
-    },
     teamBuildLength: function () {
       return this.teamOne.length + this.teamTwo.length;
     },
@@ -521,71 +466,6 @@ export default {
         padding-top: 50px;
         display: flex;
         gap: 15px;
-
-        .item {
-          border-bottom: 1px solid #514f4d;
-          padding: 0 20px;
-          height: 60px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          &-name {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-
-            span:nth-child(1) {
-              width: 28px;
-            }
-
-            &__icon {
-              position: relative;
-
-              .online {
-                position: absolute;
-                right: 0;
-                bottom: 3px;
-                width: 11px;
-                height: 11px;
-                border: 1px solid black;
-                border-radius: 50%;
-                background-color: #4fe489;
-              }
-            }
-          }
-
-          img {
-            width: 33px;
-            border-radius: 50%;
-            border: 2px solid #c88e22;
-          }
-          span {
-            color: #c88e22;
-          }
-          p {
-            text-align: right;
-            color: #c88e22;
-          }
-          .empty {
-            color: #514f4d;
-          }
-
-          &:hover {
-            transition: all 0.4s ease-in;
-            box-shadow: 0 0 15px rgba(205, 190, 145, 0.9);
-            cursor: pointer;
-            transition: all 0.5s ease;
-          }
-        }
-
-        &-left {
-          width: 50%;
-        }
-
-        &-right {
-          width: 50%;
-        }
       }
 
       .bottom {
