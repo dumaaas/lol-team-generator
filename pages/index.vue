@@ -36,7 +36,7 @@
             </div>
             <div class="middle-left__team">
               <div v-for="player in teamOne" :key="player.name" class="item">
-                <div v-if="generatedTeam" class="item-name">
+                <div class="item-name">
                   <span> {{ player.level }} </span>
                   <div class="item-name__icon">
                     <img
@@ -65,7 +65,7 @@
             </div>
             <div class="middle-right__team">
               <div v-for="player in teamTwo" :key="player.name" class="item">
-                <div v-if="generatedTeam" class="item-name">
+                <div class="item-name">
                   <span> {{ player.level }} </span>
                   <div class="item-name__icon">
                     <img
@@ -123,7 +123,9 @@
           <div class="bottom-spec">
             <div class="bottom-spec__heading">
               <h6>SPECTATORS (0/4)</h6>
-              <button type="submit">Spectate</button>
+              <button type="submit" id="show-modal" @click="showModal = true">
+                Add new player
+              </button>
             </div>
             <div class="bottom-spec__players">
               <p>No spectators</p>
@@ -186,28 +188,45 @@
       <div class="animation-player">
         <img :src="require(`@/static/${newIcon}`)" />
         <div class="name">
-          <p>
-            {{ newName }}
-          </p>
+          <p>{{ newName }} goes to team {{ newTeam }}</p>
         </div>
       </div>
     </div>
+    <Modal v-if="showModal" @close-modal="closeModal" @new-player="addNewPlayer" :icons="icons"/>
   </main>
 </template>
 
 <script>
+import Modal from "@/components/Modal.vue";
+
 export default {
+  components: {
+    Modal,
+  },
   data() {
     return {
       isButtonActive: true,
       newName: "",
       newIcon: "iconDuma.png",
-      generatedTeam: false,
+      newTeam: "",
       teamOne: [],
       teamTwo: [],
       shufflePlayers: [],
       messages: [],
       messageValue: "",
+      showModal: false,
+      icons: [
+        "iconDuma.png",
+        "iconPaka.png",
+        "iconAndro.png",
+        "iconBacak.png",
+        "iconBogdan.png",
+        "iconFapke.png",
+        "iconLemi.png",
+        "iconMatke.png",
+        "iconToma.png",
+        "iconVisnja.png",
+      ],
       players: [
         {
           id: 1,
@@ -324,10 +343,7 @@ export default {
       this.playersCopy = this.players.map((o) => ({ ...o }));
       this.shufflePlayers = this.shuffle(this.playersCopy);
       this.teamOne = this.shufflePlayers.slice(0, 5);
-      console.log("teamOne", this.teamOne);
-      console.log("teamTwo", this.teamTwo);
       this.teamTwo = this.shufflePlayers.slice(5, 10);
-      this.generatedTeam = true;
     },
     addToArray(array, item) {
       setTimeout(() => {
@@ -342,16 +358,19 @@ export default {
       this.isButtonActive = false;
       this.playersCopy = this.players.map((o) => ({ ...o }));
       var player = this.playersCopy.find((user) => user.id === id);
-      var randomTeams = ["teamOne", "teamTwo"];
+      var randomTeams = ["one", "two"];
       var centerAnimation = document.getElementById("animationPlayer");
       this.newIcon = player.icon;
       this.newName = player.name;
 
       var randomTeam =
         randomTeams[Math.floor(Math.random() * randomTeams.length)];
-
+      this.newTeam = "???";
+      setTimeout(() => {
+        this.newTeam = randomTeam;
+      }, 1500);
       if (
-        randomTeam === "teamOne" &&
+        randomTeam === "one" &&
         this.teamOne.length < 5 &&
         !this.teamOne.find((user) => user.id === player.id) &&
         !this.teamTwo.find((user) => user.id === player.id)
@@ -363,12 +382,9 @@ export default {
         !this.teamOne.find((user) => user.id === player.id)
       ) {
         this.addToArray(this.teamTwo, player);
-      } else {
-        return;
       }
       centerAnimation.classList.add("centerAnimation");
       centerAnimation.classList.remove("hidden");
-      this.generatedTeam = true;
     },
     isPlayerInTeam(id) {
       if (
@@ -400,6 +416,12 @@ export default {
     addMessage() {
       this.messages.push(this.messageValue);
     },
+    addNewPlayer(newPlayer) {
+      this.players.push(newPlayer);
+    },
+    closeModal() {
+      this.showModal = false;
+    },
   },
 };
 </script>
@@ -409,6 +431,15 @@ export default {
   display: flex;
   flex-direction: row;
   position: relative;
+
+  input {
+    width: 100%;
+    height: 38px;
+    border-radius: 0;
+    border: 2px solid #775928;
+    background-color: #010a13;
+    margin-top: 15px;
+  }
   button {
     display: inline-block;
     background-color: #1e2328;
@@ -566,15 +597,6 @@ export default {
         &-chat {
           width: 33.33%;
 
-          input {
-            width: 100%;
-            height: 38px;
-            border-radius: 0;
-            border: 2px solid #775928;
-            background-color: #010a13;
-            margin-top: 15px;
-          }
-
           &__messages {
             padding-left: 20px;
             span:nth-child(1) {
@@ -636,6 +658,7 @@ export default {
   &-right {
     width: 350px;
     height: 100vh;
+    overflow-y: auto;
     background: linear-gradient(
       0deg,
       rgba(2, 12, 21, 1) 0%,
