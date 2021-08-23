@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <div class="player-name">
-      <span class="player-level"> {{ player.level }} </span>
+      <span> {{ player.level }} </span>
       <div class="player-name__icon">
         <img
           :src="require(`@/static/${player.icon}`)"
@@ -36,12 +36,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  &-level {
-    @include breakpoint($xs) {
-      display: none;
-    }
-  }
 
   &-name {
     display: flex;
