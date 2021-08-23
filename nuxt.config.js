@@ -35,7 +35,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     // SCSS file in the project
-    '@/assets/sass/main.scss'
+    '@/assets/sass/main.scss',
     '@fortawesome/fontawesome-free/css/all.css'
   ],
 
