@@ -28,7 +28,7 @@ export default {
     link: [{
       rel: 'icon',
       type: 'image/x-icon',
-      href: '/favicon.ico'
+      href: '/logo.png'
     }]
   },
 
@@ -45,7 +45,17 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: [
+    '@nuxtjs/fontawesome',
+  ],
+
+  fontawesome: {
+    component: 'fa',
+    icons: {
+      solid: ['faBroom', 'faFire'],
+      brands: ['faBandcamp']
+    }
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],

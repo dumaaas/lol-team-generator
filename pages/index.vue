@@ -18,10 +18,10 @@
                 <p class="square"></p>
                 <p>Blind Pick</p>
               </div>
-              <div>
-                <span> Few icons </span>
-                <span> Few icons </span>
-                <span> Few icons </span>
+              <div class="heading-icons">
+                <span> <fa-icon :icon="['fab', 'bandcamp']"/> </span>
+                <span> <fa-icon :icon="['fas', 'broom']"/> </span>
+                <span> <fa-icon :icon="['fas', 'fire']"/> </span>
               </div>
             </div>
           </div>
@@ -432,6 +432,16 @@ export default {
           display: flex;
           gap: 20px;
 
+          &-icons {
+            padding-top: 10px;
+            padding-left: 20px;
+            display: flex;
+            gap: 15px;
+            svg path {
+              fill: #454742;
+            }
+          }
+
           &-left {
             padding-top: 5px;
           }
@@ -463,7 +473,7 @@ export default {
 
       .middle {
         padding-left: 20px;
-        padding-top: 50px;
+        padding-top: 30px;
         display: flex;
         gap: 15px;
       }
