@@ -40,7 +40,7 @@
                 {{ player.name }} joined the lobby
               </p>
               <p v-for="message in messages" :key="message">
-                <span>dumara gadna </span><span> {{ message }} </span>
+                <span>dumara </span><span> {{ message }} </span>
               </p>
             </div>
             <input
@@ -181,7 +181,7 @@ export default {
       players: [
         {
           id: 1,
-          name: "dumara gadna",
+          name: "dumara",
           icon: "iconDuma.png",
           rank: "Silver III",
           rankedWins: "50",
@@ -189,7 +189,7 @@ export default {
         },
         {
           id: 2,
-          name: "Hakuna Tomata",
+          name: "Toma",
           icon: "iconToma.png",
           rank: "Silver II",
           rankedWins: "41",
@@ -213,7 +213,7 @@ export default {
         },
         {
           id: 5,
-          name: "Luigi Vampa",
+          name: "Paka",
           icon: "iconPaka.png",
           rank: "Platinum IV",
           rankedWins: "52",
@@ -435,6 +435,9 @@ export default {
       background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
       padding: 50px;
 
+      @include breakpoint($xs) {
+        padding: 20px;
+      }
       .top {
         display: flex;
         justify-content: space-between;
@@ -455,6 +458,10 @@ export default {
             svg path {
               fill: #454742;
             }
+
+            @include breakpoint($xs) {
+              padding-left: 0px;
+            }
           }
 
           &-left {
@@ -464,6 +471,10 @@ export default {
             div:nth-child(2) {
               display: flex;
               gap: 15px;
+              @include breakpoint($xs) {
+                flex-direction: column;
+                gap: 5px;
+              }
               p {
                 color: #919b8c !important;
               }
@@ -474,6 +485,9 @@ export default {
                 height: 5px;
                 background: #919b8c;
                 transform: rotate(45deg);
+                @include breakpoint($xs) {
+                  display: none;
+                }
               }
             }
             h1 {

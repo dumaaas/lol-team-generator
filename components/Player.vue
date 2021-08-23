@@ -13,7 +13,7 @@
     </div>
     <div class="player-rank">
       <p>{{ player.rank }}</p>
-      <p>W: {{ player.rankedWins }} (Ranked)</p>
+      <p>W: {{ player.rankedWins }} <span>(Ranked)</span></p>
     </div>
   </div>
 </template>
@@ -27,6 +27,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/sass/abstracts/_mixins.scss";
+
 .player {
   border-bottom: 1px solid #514f4d;
   padding: 0 20px;
@@ -56,6 +58,14 @@ export default {
         border: 1px solid black;
         border-radius: 50%;
         background-color: #4fe489;
+      }
+    }
+  }
+
+  &-rank {
+    span {
+      @include breakpoint($xs) {
+        display: none;
       }
     }
   }
