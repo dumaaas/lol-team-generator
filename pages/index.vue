@@ -19,9 +19,9 @@
                 <p>Blind Pick</p>
               </div>
               <div class="heading-icons">
-                <span> <fa-icon :icon="['fab', 'bandcamp']"/> </span>
-                <span> <fa-icon :icon="['fas', 'broom']"/> </span>
-                <span> <fa-icon :icon="['fas', 'fire']"/> </span>
+                <span> <fa :icon="['fab', 'bandcamp']"/> </span>
+                <span> <fa :icon="['fas', 'broom']"/> </span>
+                <span> <fa :icon="['fas', 'fire']"/> </span>
               </div>
             </div>
           </div>
@@ -360,6 +360,7 @@ export default {
     },
     addMessage() {
       this.messages.push(this.messageValue);
+      this.messageValue = "";
     },
     addNewPlayer(newPlayer) {
       this.players.push(newPlayer);
