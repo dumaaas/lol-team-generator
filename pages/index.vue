@@ -19,9 +19,9 @@
                 <p>Blind Pick</p>
               </div>
               <div class="heading-icons">
-                <span> <fa :icon="['fab', 'bandcamp']"/> </span>
-                <span> <fa :icon="['fas', 'broom']"/> </span>
-                <span> <fa :icon="['fas', 'fire']"/> </span>
+                <span> <fa :icon="['fab', 'bandcamp']" /> </span>
+                <span> <fa :icon="['fas', 'broom']" /> </span>
+                <span> <fa :icon="['fas', 'fire']" /> </span>
               </div>
             </div>
           </div>
@@ -30,8 +30,8 @@
           </div>
         </div>
         <div class="middle">
-          <Team :team="teamOne" > TEAM 1 </Team>
-          <Team :team="teamTwo" > TEAM 2 </Team>
+          <Team :team="teamOne"> TEAM 1 </Team>
+          <Team :team="teamTwo"> TEAM 2 </Team>
         </div>
         <div class="bottom">
           <div class="bottom-chat">
@@ -51,7 +51,7 @@
           </div>
           <div class="bottom-invites">
             <div class="bottom-invites__heading">
-              <h6>INVITES (10)</h6>
+              <h6>INVITES ({{ players.length }})</h6>
             </div>
             <div class="bottom-invites__players">
               <div v-for="player in players" :key="player.name" class="player">
@@ -68,7 +68,7 @@
             <div class="bottom-spec__heading">
               <h6>SPECTATORS (0/4)</h6>
               <button type="submit" id="show-modal" @click="showModal = true">
-                Add new player
+                New player
               </button>
             </div>
             <div class="bottom-spec__players">
@@ -373,6 +373,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/sass/abstracts/_mixins.scss";
+
 .main {
   display: flex;
   flex-direction: row;
@@ -412,16 +414,18 @@ export default {
 
   &-left {
     background: url("~@/static/cover3.jpeg") no-repeat center center scroll;
-    height: 100vh;
-    width: 85%;
+    height: 100%;
+
+    width: calc(100% - 350px);
 
     .overlay {
       position: relative;
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
       flex: 1;
       width: 100%;
-      height: 100%;
+      height: 100vh;
       background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
       padding: 50px;
 
@@ -480,16 +484,19 @@ export default {
       }
 
       .bottom {
-        padding-top: 30px;
+        padding-top: 60px;
         padding-left: 20px;
         display: flex;
         margin-top: auto;
         gap: 30px;
+
         &-chat {
           width: 33.33%;
 
           &__messages {
             padding-left: 20px;
+            height: 200px;
+            overflow-y: auto;
             span:nth-child(1) {
               color: #c8a356;
             }
@@ -503,7 +510,10 @@ export default {
 
         &-invites {
           width: 33.33%;
+
           &__players {
+            height: 200px;
+            overflow-y: auto;
             padding-left: 27px;
             .player {
               padding-top: 2px;
@@ -527,19 +537,28 @@ export default {
 
         &-spec {
           width: 33.33%;
+          height: 200px;
+          overflow-y: auto;
 
           p {
-            padding-left: 20px;
-            color: #a09b8c;
-            font-size: 16px;
-            padding-top: 10px;
+            display: none;
+            @include breakpoint($xl) {
+              padding-left: 20px;
+              color: #a09b8c;
+              font-size: 16px;
+              padding-top: 10px;
+              display: block;
+            }
           }
 
           &__heading {
             display: flex;
             justify-content: space-between;
             h6 {
-              display: inline-block;
+              display: none;
+              @include breakpoint($xl) {
+                display: inline-block;
+              }
             }
           }
         }
@@ -549,7 +568,8 @@ export default {
   &-right {
     width: 350px;
     height: 100vh;
-    overflow-y: auto;
+    position: fixed;
+    right: 0;
     background: linear-gradient(
       0deg,
       rgba(2, 12, 21, 1) 0%,
@@ -558,6 +578,7 @@ export default {
 
     .team-members {
       padding: 20px 0;
+
       &__heading {
         background-color: rgba(2, 12, 21, 1);
         padding: 5px 20px;
@@ -569,10 +590,17 @@ export default {
       }
 
       &__players {
+        height: 100vh;
+        overflow-y: auto;
+        padding-bottom: 40px;
         padding: 20px;
+
         &-player {
           display: flex;
           justify-content: space-between;
+          &:last-child {
+            padding-bottom: 40px;
+          }
           .player-left {
             display: flex;
             padding-bottom: 15px;

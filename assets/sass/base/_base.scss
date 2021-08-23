@@ -44,3 +44,29 @@ hr {
   font-size: 0.9rem;
   padding-left: 1rem;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+  ;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c8a356;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darken($color: #c8a356, $amount: 10%);
+}
+
+body {
+  overflow-y: hidden;
+}
