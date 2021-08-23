@@ -417,7 +417,13 @@ export default {
     height: 100%;
 
     width: calc(100% - 350px);
+    @include breakpoint($xs) {
+      width: 100%;
+    }
 
+    @include breakpoint($sm-only) {
+      width: 100%;
+    }
     .overlay {
       position: relative;
       display: flex;
@@ -433,10 +439,14 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        @include breakpoint($xs-to-md) {
+          flex-direction: column;
+          gap: 20px;
+          align-items: flex-start;
+        }
         .heading {
           display: flex;
           gap: 20px;
-
           &-icons {
             padding-top: 10px;
             padding-left: 20px;
@@ -474,6 +484,12 @@ export default {
             }
           }
         }
+
+        .generate {
+          @include breakpoint($xs-to-md) {
+            margin-left: 60px;
+          }
+        }
       }
 
       .middle {
@@ -481,6 +497,10 @@ export default {
         padding-top: 30px;
         display: flex;
         gap: 15px;
+        @include breakpoint($xs-to-md) {
+          flex-direction: column;
+          gap: 50px;
+        }
       }
 
       .bottom {
@@ -490,9 +510,15 @@ export default {
         margin-top: auto;
         gap: 30px;
 
+        @include breakpoint($xs) {
+          flex-direction: column;
+        }
+
         &-chat {
           width: 33.33%;
-
+          @include breakpoint($xs) {
+            width: 100%;
+          }
           &__messages {
             padding-left: 20px;
             height: 200px;
@@ -510,7 +536,9 @@ export default {
 
         &-invites {
           width: 33.33%;
-
+          @include breakpoint($xs) {
+            width: 100%;
+          }
           &__players {
             height: 200px;
             overflow-y: auto;
@@ -539,7 +567,9 @@ export default {
           width: 33.33%;
           height: 200px;
           overflow-y: auto;
-
+          @include breakpoint($xs) {
+            width: 100%;
+          }
           p {
             display: none;
             @include breakpoint($xl) {
@@ -575,6 +605,14 @@ export default {
       rgba(2, 12, 21, 1) 0%,
       rgba(13, 30, 41, 1) 100%
     );
+
+    @include breakpoint($xs) {
+      display: none;
+    }
+
+    @include breakpoint($sm-only) {
+      display: none;
+    }
 
     .team-members {
       padding: 20px 0;

@@ -34,9 +34,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/sass/abstracts/_mixins.scss";
+
 .team {
   width: 50%;
-
+  @include breakpoint($xs-to-md) {
+    width: 100%;
+  }
   h6 {
     font-size: 16px;
     font-weight: 700;
