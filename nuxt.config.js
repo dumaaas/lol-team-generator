@@ -36,6 +36,7 @@ export default {
   css: [
     // SCSS file in the project
     '@/assets/sass/main.scss'
+    '@fortawesome/fontawesome-free/css/all.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
