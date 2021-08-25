@@ -1,13 +1,16 @@
 <template>
   <div class="team">
     <div class="team-heading">
-      <h6><slot></slot></h6>
+      <h6 @click="$emit('open-stats', team)"><slot></slot></h6>
+      <div class="team-heading__sort" @click="sortTeam">
+        <fa :icon="['fas', 'sort']" />
+      </div>
     </div>
     <div class="team-players">
       <Player v-for="player in team" :key="player.name" :player="player" />
       <div>
         <div v-for="index in teamLength" :key="index" class="player">
-          <p class="empty">Empty</p>
+          <p class="empty" v-once>Empty</p>
         </div>
       </div>
     </div>
@@ -30,26 +33,43 @@ export default {
       return 5 - this.team.length;
     },
   },
+  methods: {
+    sortTeam() {
+      if (!this.team.length) return;
+      this.team = this.team.slice().sort(function (a, b) {
+        return b.level - a.level;
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/sass/abstracts/_mixins.scss";
 
+h6 {
+  cursor: pointer;
+}
 .team {
   width: 50%;
   @include breakpoint($xs-to-md) {
     width: 100%;
   }
-  h6 {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    color: #a09b8c;
-    padding-left: 20px;
-    padding-bottom: 5px;
-  }
+  &-heading {
+    display: flex;
+    justify-content: space-between;
+    &__sort {
+      padding-right: 20px;
+      cursor: pointer;
+      svg path {
+        fill: #a09b8c;
 
+        &:hover {
+          fill: darken($color: #a09b8c, $amount: 20%);
+        }
+      }
+    }
+  }
   .player {
     border-bottom: 1px solid #514f4d;
     padding: 0 20px;

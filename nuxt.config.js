@@ -52,7 +52,7 @@ export default {
   fontawesome: {
     component: 'fa',
     icons: {
-      solid: ['faBroom', 'faFire'],
+      solid: ['faBroom', 'faFire', 'faSort'],
       brands: ['faBandcamp']
     }
   },

@@ -9,7 +9,7 @@
         />
         <div class="online"></div>
       </div>
-      <span>{{ player.name }}</span>
+      <span v-once>{{ player.name }}</span>
     </div>
     <div class="player-rank">
       <p>{{ player.rank }}</p>

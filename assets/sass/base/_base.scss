@@ -7,6 +7,18 @@
   color: $secondary;
 }
 
+input {
+  width: 100%;
+  height: 38px;
+  border-radius: 0;
+  border: 2px solid #775928;
+  background-color: #010a13;
+  margin: 15px 20px 20px 0 !important;
+  color: $tertiary;
+  padding-left: 10px;
+  font-size: 0.9rem;
+}
+
 a {
   color: $link;
   text-decoration: none;

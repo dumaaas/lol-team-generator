@@ -1,75 +1,78 @@
 body {
-    font-family: Friz Quadrata sans-serif;
-    font-size: 1rem;
+  font-family: Friz Quadrata sans-serif;
+  font-size: 1rem;
 }
 
 h1,
 h2,
 h3,
 h4,
-h5,
-h6 {
-    span {
-        color: inherit;
-    }
+h5 {
+  span {
+    color: inherit;
+  }
 }
 
 h1,
 h2 {
-    color: $primary;
-    font-weight: 500;
-    font-size: 2.5714rem;
-    padding: 0;
-    margin: 0;
-    @include breakpoint($md) {
-        font-size: 3.4285rem;
-        line-height: 3.4285rem;
-    }
-    @include breakpoint($xs) {
-       font-size: 1.9rem;
-       line-height: 1.9rem;
-    }
+  color: $primary;
+  font-weight: 500;
+  font-size: 2.5714rem;
+  padding: 0;
+  margin: 0;
+
+  @include breakpoint($md) {
+    font-size: 3.4285rem;
+    line-height: 3.4285rem;
+  }
+
+  @include breakpoint($xs) {
+    font-size: 1.9rem;
+    line-height: 1.9rem;
+  }
 }
 
 h3,
 h4 {
-    color: $secondary;
-    font-style: normal;
-    margin: 0;
-}
-
-h5,
-h6 {
-    color: $tertiary;
-    font-style: normal;
-    margin: 0;
-}
-
-h3 {
-    font-weight: 500;
-    font-size: 1.938rem;
-}
-
-h4 {
-    font-weight: 500;
-    font-size: 1.438rem;
+  color: $secondary;
+  font-style: normal;
+  margin: 0;
 }
 
 h5 {
-    font-weight: 500;
-    font-size: 1.313rem;
+  color: $tertiary;
+  font-style: normal;
+  margin: 0;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 1.938rem;
+}
+
+h4 {
+  font-weight: 500;
+  font-size: 1.438rem;
+}
+
+h5 {
+  font-weight: 500;
+  font-size: 1.313rem;
 }
 
 h6 {
-    font-weight: 500;
-    font-size: 1.125rem;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #a09b8c;
+  padding-left: 20px;
+  padding-bottom: 5px;
 }
 
 li {
-    font-size: 1.125rem;
+  font-size: 1.125rem;
 }
 
 span {
-   color: $tertiary;
+  color: $tertiary;
 }
-

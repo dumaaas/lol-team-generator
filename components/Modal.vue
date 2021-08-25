@@ -2,8 +2,8 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-close" @click="$emit('close-modal', closeModal)">
+        <form class="modal-container" @submit.prevent="addNewPlayer">
+          <div class="modal-close" @click="$emit('close-modal')">
             X
           </div>
           <div class="modal-header">
@@ -49,12 +49,10 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button" @click="addNewPlayer">
-                Add
-              </button>
+              <button class="modal-default-button">Add</button>
             </slot>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </transition>
@@ -216,37 +214,5 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}
-
-input {
-  width: 100%;
-  height: 38px;
-  border-radius: 0;
-  border: 2px solid #775928;
-  background-color: #010a13;
-  margin-top: 15px;
-}
-button {
-  display: inline-block;
-  background-color: #1e2328;
-  color: #cdbe91;
-  border: 2px solid #c8a356;
-  padding: 8px 40px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  cursor: pointer;
-  &:hover {
-    border: 2px solid #cdbe91;
-    transition: all 0.4s ease-in;
-    box-shadow: 0 5px 15px rgba(205, 190, 145, 0.4);
-  }
-}
-h6 {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  color: #a09b8c;
-  padding-left: 20px;
-  padding-bottom: 5px;
 }
 </style>
